@@ -1,0 +1,129 @@
+openapi: 3.0.3
+info:
+  title: Wound_IQ API
+  version: "0.1.0"
+servers:
+  - url: http://localhost:8080/v1
+paths:
+  /patients:
+    get:
+      summary: List patients
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create patient
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - full_name
+              properties:
+                full_name:
+                  type: string
+                date_of_birth:
+                  type: string
+                  format: date-time
+                gender:
+                  type: string
+                medical_record_number:
+                  type: string
+      responses:
+        '201':
+          description: Created
+  /patients/{id}/history:
+    get:
+      summary: Patient wound history
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: JSON history
+  /clinicians:
+    get:
+      summary: List clinicians
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+    post:
+      summary: Create clinician
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - full_name
+              properties:
+                full_name:
+                  type: string
+                email:
+                  type: string
+                role:
+                  type: string
+      responses:
+        '201':
+          description: Created
+  /assessments:
+    get:
+      summary: List assessments
+      parameters:
+        - name: patient_id
+          in: query
+          schema:
+            type: integer
+        - name: clinician_id
+          in: query
+          schema:
+            type: integer
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date-time
+        - name: date_to
+          in: query
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: OK
+  /assessments/{id}/full:
+    get:
+      summary: Full assessment (uses get_assessment_full)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Full assessment JSON

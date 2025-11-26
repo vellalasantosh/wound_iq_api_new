@@ -1,0 +1,12 @@
+/bin/
+/vendor/
+/*.env
+*.log
+*.zip
+*.exe
+# VS Code
+.vscode/
+# Mac
+.DS_Store
+# Go
+*.test
